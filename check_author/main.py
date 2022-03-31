@@ -21,24 +21,25 @@ def main():
                     is_description = True
                 
                 if count_lines > 5:
-                    is_author      = False
-                    is_description = False
                     break
                 
                 count_lines += 1
         
         # file is empty
         if count_lines <= 2:
-            errors.append(f"{filename} is empty")
+            errors.append(TypeError(f"{filename} is empty"))
             continue
         
         if not is_author:
-            errors.append(f"{filename} has no author")
+            errors.append(TypeError(f"{filename} has no author"))
             
         if not is_description:
-            errors.append(f"{filename} has no description (description to let others know the purpose of this file)")
+            errors.append(TypeError(f"{filename} has no description (description to let others know the purpose of this file)"))
     
-    return 0
+    if len(errors) > 0:
+        return errors
+    else:
+        return 0
 
 if __name__ == "__main__":
     main()
