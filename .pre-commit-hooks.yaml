@@ -1,0 +1,5 @@
+- id: check-author
+  name: Check Author
+  description: This repo for check the author exist
+  entry: check-author
+  language: python

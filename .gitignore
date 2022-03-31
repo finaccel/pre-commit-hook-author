@@ -1,0 +1,6 @@
+check_author.egg-info/*
+check_author.egg-info/
+check_author.egg-info
+build/*
+build/
+build
