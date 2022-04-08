@@ -4,3 +4,4 @@ check_author.egg-info
 build/*
 build/
 build
+.DS_Store

@@ -1,4 +1,5 @@
 import argparse
+import pathlib
 
 def main():
     parser = argparse.ArgumentParser()
@@ -9,6 +10,11 @@ def main():
     is_author      = False
     is_description = False
     for filename in args.filenames:
+        # check if file is not python or sql
+        file_extension = pathlib.Path(filename).suffix
+        if file_extension != ".py" and file_extension != ".sql":
+            continue
+        
         count_lines = 0
         with open(filename, 'rb') as fb:  
             for line in fb:
