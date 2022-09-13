@@ -1,0 +1,26 @@
+name: pre_commit
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  pre_commit:
+    runs-on: ubuntu-20.04
+    container:
+      image: finaccel/terraform-ci:latest
+      credentials:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+      options: --user root # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#docker-container-filesystem
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 20
+      -
+        name: pre-commit
+        run: pre-commit run -a

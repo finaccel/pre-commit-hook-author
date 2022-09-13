@@ -1,0 +1,44 @@
+
+
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - '!v*.*.*-rc'
+      - '!v*.*.*-dev'
+
+jobs:
+  release:
+    runs-on: ubuntu-20.04
+    container:
+      image: finaccel/git-chglog:latest
+      credentials:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+      options: --user root # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#docker-container-filesystem
+    steps:
+      -
+        name: Get Tag
+        run: echo "TAG=${GITHUB_REF:10}" >> $GITHUB_ENV
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      -
+        name: Generate CHANGELOG.md
+        run: |
+          git-chglog \
+          --config /git-chglog/.chglog/config.yml \
+          --template /git-chglog/.chglog/CHANGELOG.tpl.md \
+          --repository-url "https://github.com/${{ github.repository }}" \
+          --output CHANGELOG.md ${{ env.TAG }}
+      -
+        name: Generate Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.TAG }}
+          body_path: CHANGELOG.md
+          token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
