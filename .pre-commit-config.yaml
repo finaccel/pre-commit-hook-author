@@ -5,7 +5,7 @@ repos:
       - id: black
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v4.6.0
     hooks:
       # Identify invalid files
       - id: check-ast # Simply check whether files parse as valid python.
