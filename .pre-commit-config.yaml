@@ -68,6 +68,6 @@ repos:
 
   # Gitleaks is a SAST tool for detecting and preventing hardcoded secrets like passwords, api keys, and tokens in git repos
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.12.0
+    rev: v8.21.1
     hooks:
       - id: gitleaks
